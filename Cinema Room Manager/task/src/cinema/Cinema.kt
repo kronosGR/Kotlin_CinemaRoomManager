@@ -1,22 +1,36 @@
 package cinema
 
 
-fun putSpace(arr: Array<Array<String>>) {
-    for (y in arr.indices) {
-        for (x in arr[y].indices) {
-            arr[y][x] = "S"
-        }
-    }
+var income = 0
+var rows: Int = 0
+var seatsPerRow: Int = 0
+var seats: Array<Array<String>> = arrayOf()
+fun askTheaterSize() {
+    println("Enter the number of rows:")
+    rows = readln().toInt()
+    println("Enter the number of seats in each row:");
+    seatsPerRow = readln().toInt()
+
+    seats = Array(rows) { row -> Array(seatsPerRow) { col -> "S" } }
 }
 
-fun printCinema(arr: Array<Array<String>>) {
+
+fun printCinema() {
     println("Cinema:")
-    println("  1 2 3 4 5 6 7 8")
-    for (y in arr.indices) {
+    print("  ")
+    for (i in seats[0].indices) {
+        print(i + 1)
+        if (i < seats[0].size - 1) {
+            print(" ")
+        }
+    }
+    println()
+
+    for (y in seats.indices) {
         print("${y + 1} ")
-        for (x in arr[y].indices) {
-            print(arr[y][x])
-            if (x < arr[y].size - 1) {
+        for (x in seats[y].indices) {
+            print(seats[y][x])
+            if (x < seats[y].size - 1) {
                 print(" ")
             }
         }
@@ -24,32 +38,56 @@ fun printCinema(arr: Array<Array<String>>) {
     }
 }
 
-fun main() {
-    // write your code here
-    val seats: Array<Array<String>> = Array(7) { row -> Array(8) { col -> "S" } }
-//    putSpace(seats)
-//    printCinema(seats)
-    var income = 0
-
-    println("Enter the number of rows:")
-    val rows = readln().toInt()
-    println("Enter the number of seats in each row:")
-    val seatsPerRow = readln().toInt()
+fun bookTicket(row: Int, col: Int): Int {
+    var price = 0
 
     if (rows * seatsPerRow <= 60) {
-        income = rows * seatsPerRow * 10;
+        price = 10;
     } else {
-        var half = rows / 2;
-        if (rows % 2 == 0) {
-            income = half * seatsPerRow * 10;
-            income += half * seatsPerRow * 8;
+        var half = rows / 2
+        if (row <= half) {
+            price = 10;
         } else {
-            income = half * seatsPerRow * 10;
-            income += (half + 1) * seatsPerRow * 8;
-
+            price = 8;
         }
     }
 
-    println("Total income:")
-    println("$$income")
+    seats[row - 1][col - 1] = "B";
+    return price;
+}
+
+fun main() {
+    // write your code here
+//    putSpace(seats)
+//    printCinema(seats)
+
+    askTheaterSize()
+
+//    if (rows * seatsPerRow <= 60) {
+//        income = rows * seatsPerRow * 10;
+//    } else {
+//        var half = rows / 2;
+//        if (rows % 2 == 0) {
+//            income = half * seatsPerRow * 10;
+//            income += half * seatsPerRow * 8;
+//        } else {
+//            income = half * seatsPerRow * 10;
+//            income += (half + 1) * seatsPerRow * 8;
+//
+//        }
+//    }
+//
+//    println("Total income:")
+//    println("$$income")
+    printCinema()
+
+    println()
+    println("Enter a row number:")
+    val row = readln().toInt()
+    println("Enter a seat number in that row:")
+    val col = readln().toInt()
+
+    println("Ticket price: $" + bookTicket(row, col))
+    println();
+    printCinema()
 }
