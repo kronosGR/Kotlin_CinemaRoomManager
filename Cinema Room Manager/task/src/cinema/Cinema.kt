@@ -27,6 +27,29 @@ fun printCinema(arr: Array<Array<String>>) {
 fun main() {
     // write your code here
     val seats: Array<Array<String>> = Array(7) { row -> Array(8) { col -> "S" } }
-    putSpace(seats)
-    printCinema(seats)
+//    putSpace(seats)
+//    printCinema(seats)
+    var income = 0
+
+    println("Enter the number of rows:")
+    val rows = readln().toInt()
+    println("Enter the number of seats in each row:")
+    val seatsPerRow = readln().toInt()
+
+    if (rows * seatsPerRow <= 60) {
+        income = rows * seatsPerRow * 10;
+    } else {
+        var half = rows / 2;
+        if (rows % 2 == 0) {
+            income = half * seatsPerRow * 10;
+            income += half * seatsPerRow * 8;
+        } else {
+            income = half * seatsPerRow * 10;
+            income += (half + 1) * seatsPerRow * 8;
+
+        }
+    }
+
+    println("Total income:")
+    println("$$income")
 }
