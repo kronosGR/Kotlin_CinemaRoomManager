@@ -98,7 +98,7 @@ fun showMenu() {
         println("2. Buy a ticket")
         println("3. Statistics")
         println("0. Exit")
-        val option = readln().toInt()
+        val option = readln().toInt() 
 
         when (option) {
             1 -> printCinema()
